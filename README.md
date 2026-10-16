@@ -19,4 +19,6 @@ Every page has a clearly marked `AI SUPPORT WIDGET` comment in `<head>` and befo
 
 ## Publishing
 
-GitHub Actions deploys the site on every push to `main` (see `.github/workflows/pages.yml`). The URL is shown in **Settings → Pages** after the first run.
+The site is live at **https://olgakhry.github.io/flower-shop-pages/** via branch-based Pages: any push to `main` is redeployed automatically (Settings → Pages → deploy from `main` /).
+
+`.github/workflows/pages.yml` exists locally but is not committed — the repo owner's `gh` token currently lacks the `workflow` scope. To switch to the Actions-based deployment instead, refresh the token with `gh auth refresh -s workflow`, then commit and push that file and switch Pages to GitHub Actions.
