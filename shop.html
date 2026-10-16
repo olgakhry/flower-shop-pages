@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Shop seasonal bouquets at Bloom & Stem. Local delivery around Brookfield.">
+  <title>Shop — Bloom &amp; Stem</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- ============================================================
+       AI SUPPORT WIDGET — Forethought / Zendesk AI agent
+       Paste the widget installation snippet here (in <head>).
+       ============================================================ -->
+</head>
+<body>
+  <header class="site">
+    <a class="brand" href="index.html">Bloom &amp; Stem</a>
+    <nav aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="shop.html" class="active">Shop</a>
+      <a href="track.html">Track order</a>
+      <a href="help.html">Help</a>
+    </nav>
+  </header>
+  <main>
+    <div class="page-title">
+      <div class="eyebrow">This week at the market</div>
+      <h1>Bouquets</h1>
+      <p>Every arrangement is made to order in the shop. Choose a delivery date at checkout — we deliver around Brookfield, Tuesday to Saturday.</p>
+    </div>
+
+    <section class="cards" id="catalog" aria-label="Bouquet catalog"></section>
+
+    <section class="panel hidden" id="checkout-section" aria-label="Checkout">
+      <div class="eyebrow">Checkout</div>
+      <h2 style="margin:8px 0 18px">Your order</h2>
+      <div id="cart-lines"></div>
+      <div class="total-line"><span>Delivery</span><span id="delivery-fee"></span></div>
+      <div class="total-line" style="border-top:1px solid var(--line);margin-top:10px;padding-top:14px"><span>Total</span><span id="cart-total"></span></div>
+
+      <form id="checkout-form" style="margin-top:26px" novalidate>
+        <div class="form-grid">
+          <div class="field"><label for="f-name">Full name</label><input id="f-name" required autocomplete="name"></div>
+          <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" required autocomplete="email"></div>
+          <div class="field"><label for="f-address">Delivery address</label><input id="f-address" required autocomplete="street-address"></div>
+          <div class="field"><label for="f-date">Delivery date</label><input id="f-date" type="date" required></div>
+          <div class="field" style="grid-column:1/-1"><label for="f-card">Card number <span class="note">(demo — use any 16 digits)</span></label><input id="f-card" inputmode="numeric" placeholder="4242 4242 4242 4242" required></div>
+        </div>
+        <button class="button" type="submit">Pay and place order</button>
+        <p class="note" style="margin-top:12px">Demo checkout — no payment is taken and no card details are stored or sent anywhere.</p>
+      </form>
+
+      <div class="hidden" id="order-confirmation" style="margin-top:22px">
+        <h3 style="margin:0 0 8px">Thank you — your order is in! 🌷</h3>
+        <p>Your order number is <strong id="conf-number"></strong>. Keep it handy to <a href="track.html">track your delivery</a>.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="site">
+    Secure checkout · Local delivery · © 2026 Bloom &amp; Stem (fictional demo shop)<br>
+    This is a demonstration storefront for AI support tooling — no real orders or payments are processed.
+  </footer>
+  <script src="demo-data.js"></script>
+  <script>
+    (function () {
+      var cart = [];
+      var $ = function (s) { return document.querySelector(s); };
+      var fmt = function (n) { return "$" + n.toFixed(2); };
+
+      function renderCatalog() {
+        var el = $("#catalog");
+        el.innerHTML = CATALOG.map(function (b) {
+          return '<article class="card"><div class="thumb swatch-' + b.swatch + '"></div>' +
+            '<div class="body"><h3>' + b.name + '</h3><span class="price">' + fmt(b.price) + '</span>' +
+            '<p>' + b.desc + '</p><button class="button" data-id="' + b.id + '">Add to cart</button></div></article>';
+        }).join("");
+        el.addEventListener("click", function (e) {
+          var btn = e.target.closest("button[data-id]");
+          if (btn) addToCart(btn.dataset.id);
+        });
+      }
+
+      function addToCart(id) {
+        var line = cart.find(function (l) { return l.id === id; });
+        if (line) line.qty += 1; else cart.push({ id: id, qty: 1 });
+        renderCart();
+        $("#checkout-section").classList.remove("hidden");
+        $("#checkout-section").scrollIntoView({ behavior: "smooth" });
+      }
+
+      function subtotal() {
+        return cart.reduce(function (s, l) {
+          var b = CATALOG.find(function (x) { return x.id === l.id; });
+          return s + b.price * l.qty;
+        }, 0);
+      }
+
+      function deliveryFee() { return subtotal() >= SHOP.freeDeliveryOver ? 0 : SHOP.deliveryFee; }
+
+      function renderCart() {
+        $("#cart-lines").innerHTML = cart.map(function (l) {
+          var b = CATALOG.find(function (x) { return x.id === l.id; });
+          return '<div class="cart-line"><span>' + b.name + " × " + l.qty +
+            ' <button class="button ghost" style="padding:2px 8px;margin-left:8px" data-remove="' + b.id + '">remove</button></span><span>' + fmt(b.price * l.qty) + "</span></div>";
+        }).join("");
+        $("#delivery-fee").textContent = deliveryFee() === 0 ? "Free" : fmt(deliveryFee());
+        $("#cart-total").textContent = fmt(subtotal() + deliveryFee());
+      }
+
+      $("#cart-lines").addEventListener("click", function (e) {
+        var btn = e.target.closest("button[data-remove]");
+        if (!btn) return;
+        cart = cart.filter(function (l) { return l.id !== btn.dataset.remove; });
+        renderCart();
+        if (!cart.length) $("#checkout-section").classList.add("hidden");
+      });
+
+      $("#checkout-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!cart.length) return;
+        var number = "BS-" + Math.floor(10300 + Math.random() * 500);
+        var order = {
+          number: number,
+          email: $("#f-email").value.trim(),
+          placed: new Date().toISOString().slice(0, 10),
+          item: CATALOG.find(function (x) { return x.id === cart[0].id; }).name + (cart.length > 1 ? " + " + (cart.length - 1) + " more" : ""),
+          qty: cart.reduce(function (s, l) { return s + l.qty; }, 0),
+          total: subtotal() + deliveryFee(),
+          status: "processing",
+          carrier: "Brookfield Courier",
+          tracking: null,
+          eta: $("#f-date").value,
+          address: $("#f-address").value.trim()
+        };
+        try {
+          var mine = JSON.parse(localStorage.getItem("bs-orders") || "[]");
+          mine.push(order);
+          localStorage.setItem("bs-orders", JSON.stringify(mine));
+        } catch (err) { /* demo continues without persistence */ }
+        $("#conf-number").textContent = number;
+        $("#order-confirmation").classList.remove("hidden");
+        $("#checkout-form").classList.add("hidden");
+        cart = [];
+        renderCart();
+      });
+
+      renderCatalog();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+/* Bloom & Stem — shared styles */
+:root{
+  --ink:#26382d;--muted:#667267;--cream:#fbf8f1;--paper:#ffffff;
+  --green:#425e48;--green-dark:#33493a;--blush:#e6b7a6;--gold:#c9a24b;
+  --line:#e7e3d8;--soft:#f1eee5;
+}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:var(--cream);font:16px/1.55 Georgia,"Times New Roman",serif}
+a{color:var(--green)}
+h1,h2,h3{font-weight:400}
+
+header.site{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px max(6vw,24px);border-bottom:1px solid var(--line);background:var(--cream);position:sticky;top:0;z-index:20}
+header.site .brand{font-size:1.25rem;letter-spacing:.04em;text-decoration:none;color:var(--ink)}
+header.site nav{display:flex;gap:24px;flex-wrap:wrap}
+header.site nav a{color:var(--ink);text-decoration:none;font:.95rem/1 Arial,sans-serif}
+header.site nav a.active{color:var(--green);border-bottom:2px solid var(--green);padding-bottom:4px}
+
+.wrap{padding:0 max(6vw,24px)}
+.eyebrow{color:var(--green);text-transform:uppercase;letter-spacing:.16em;font:700 .75rem/1.4 Arial,sans-serif}
+.button{display:inline-block;padding:13px 22px;border-radius:3px;background:var(--green);color:#fff;text-decoration:none;font:600 .9rem Arial,sans-serif;border:none;cursor:pointer}
+.button:hover{background:var(--green-dark)}
+.button.ghost{background:transparent;color:var(--green);border:1px solid var(--green)}
+
+.hero{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:40px;padding:70px max(9vw,28px)}
+.hero h1{max-width:560px;margin:15px 0;font-size:clamp(2.6rem,6vw,4.6rem);line-height:1.04}
+.hero .intro{max-width:450px;color:var(--muted);font-size:1.1rem}
+.art{min-height:330px;display:grid;place-items:center;border-radius:48% 48% 4px 4px;background:radial-gradient(ellipse at 50% 75%,#789071 0 4%,transparent 4.5%),radial-gradient(ellipse at 42% 50%,#e6b7a6 0 8%,transparent 8.5%),radial-gradient(ellipse at 58% 47%,#d98f91 0 9%,transparent 9.5%),radial-gradient(ellipse at 50% 37%,#f0d5a2 0 8%,transparent 8.5%),radial-gradient(ellipse at 40% 36%,#c88381 0 8%,transparent 8.5%),radial-gradient(ellipse at 62% 34%,#e9b9a9 0 8%,transparent 8.5%),linear-gradient(155deg,#e9eee2,#d7e0d0)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px;padding:10px max(6vw,24px) 50px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.card .thumb{height:150px}
+.card .body{padding:16px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h3{margin:0;font-size:1.15rem}
+.card .price{font:600 .95rem Arial,sans-serif;color:var(--green)}
+.card p{margin:0;color:var(--muted);font-size:.92rem;flex:1}
+.card .swatch-1{background:linear-gradient(150deg,#f0d5a2,#d98f91)}
+.card .swatch-2{background:linear-gradient(150deg,#e6b7a6,#b76b74)}
+.card .swatch-3{background:linear-gradient(150deg,#cfdcc6,#789071)}
+.card .swatch-4{background:linear-gradient(150deg,#e9d9ec,#a98bb8)}
+.card .swatch-5{background:linear-gradient(150deg,#f7e6d0,#e0b184)}
+.card .swatch-6{background:linear-gradient(150deg,#dbe4ef,#8fa6c4)}
+.card button{align-self:flex-start;margin-top:6px;padding:9px 16px}
+
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:26px 28px;margin:16px max(6vw,24px)}
+.page-title{padding:46px max(6vw,24px) 6px}
+.page-title h1{margin:8px 0 6px;font-size:clamp(2rem,4vw,3rem)}
+.page-title p{margin:0;color:var(--muted);max-width:640px}
+
+.info{padding:42px max(9vw,28px);background:var(--soft);text-align:center}
+.info h2{margin:0 0 10px;font-size:2rem}
+.info p{margin:5px;color:var(--muted)}
+
+footer.site{padding:26px;text-align:center;color:var(--muted);font:.82rem/1.7 Arial,sans-serif;border-top:1px solid var(--line);margin-top:40px}
+
+/* Knowledge base */
+.kb-search{width:min(560px,100%);padding:12px 16px;border:1px solid var(--line);border-radius:4px;font:1rem Georgia,serif;background:var(--paper)}
+.kb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;padding:24px max(6vw,24px)}
+.kb-card{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:20px 22px;cursor:pointer}
+.kb-card h3{margin:0 0 8px;font-size:1.1rem}
+.kb-card p{margin:0;color:var(--muted);font-size:.92rem}
+details.article{background:var(--paper);border:1px solid var(--line);border-radius:6px;margin:14px max(6vw,24px)}
+details.article summary{cursor:pointer;padding:18px 24px;font:600 1.05rem Georgia,serif;list-style-position:inside}
+details.article .content{padding:0 24px 22px;color:var(--ink)}
+details.article .content p{margin:8px 0}
+details.article .content ul{margin:8px 0;padding-left:22px}
+
+/* Shop / cart / forms */
+table.orders{width:100%;border-collapse:collapse;margin-top:14px}
+table.orders th,table.orders td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);font-size:.95rem}
+table.orders th{font:700 .78rem/1 Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.badge{display:inline-block;padding:4px 10px;border-radius:99px;font:700 .72rem/1 Arial,sans-serif;letter-spacing:.05em;text-transform:uppercase}
+.badge.delivered{background:#dcead9;color:#2c4a2f}
+.badge.in-transit{background:#fdeecd;color:#7a5a12}
+.badge.processing{background:#e2e6f5;color:#3a4a86}
+
+input,select,textarea{font:1rem Georgia,serif;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);width:100%}
+.field{margin-bottom:16px}
+.field label{display:block;font:600 .82rem/1 Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:7px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.cart-line{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.total-line{display:flex;justify-content:space-between;font:600 1rem Arial,sans-serif;padding-top:12px}
+.note{color:var(--muted);font-size:.85rem}
+.hidden{display:none}
+
+@media(max-width:760px){
+  header.site{flex-direction:column;align-items:flex-start}
+  .hero{grid-template-columns:1fr;padding-top:48px}
+  .form-grid{grid-template-columns:1fr}
+  .art{min-height:250px}
+}
